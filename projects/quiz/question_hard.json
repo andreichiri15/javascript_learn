@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "question": "Which of these are prime numbers?",
+    "answers": ["2", "4", "5", "9"],
+    "correct_answer": ["2", "5"]
+  },
+  {
+    "id": 2,
+    "question": "What is the capital of Canada?",
+    "answers": ["Toronto", "Ottawa", "Vancouver", "Montreal"],
+    "correct_answer": "Ottawa"
+  },
+  {
+    "id": 3,
+    "question": "Which animals can fly?",
+    "answers": ["Eagle", "Bat", "Penguin", "Ostrich"],
+    "correct_answer": ["Eagle", "Bat"]
+  },
+  {
+    "id": 4,
+    "question": "Which programming languages are statically typed?",
+    "answers": ["Java", "Python", "C++", "JavaScript"],
+    "correct_answer": ["Java", "C++"]
+  },
+  {
+    "id": 5,
+    "question": "Which countries are in South America?",
+    "answers": ["Brazil", "Mexico", "Argentina", "Spain"],
+    "correct_answer": ["Brazil", "Argentina"]
+  },
+  {
+    "id": 6,
+    "question": "Who painted the ceiling of the Sistine Chapel?",
+    "answers": ["Michelangelo", "Leonardo da Vinci", "Raphael", "Donatello"],
+    "correct_answer": "Michelangelo"
+  },
+  {
+    "id": 7,
+    "question": "Which of the following are search engines?",
+    "answers": ["Google", "Yahoo", "Facebook", "Bing"],
+    "correct_answer": ["Google", "Yahoo", "Bing"]
+  },
+  {
+    "id": 8,
+    "question": "Which of these are considered continents?",
+    "answers": ["Asia", "Africa", "Greenland", "Australia"],
+    "correct_answer": ["Asia", "Africa", "Australia"]
+  },
+  {
+    "id": 9,
+    "question": "Which of these are elements on the periodic table?",
+    "answers": ["Hydrogen", "Water", "Oxygen", "Steel"],
+    "correct_answer": ["Hydrogen", "Oxygen"]
+  },
+  {
+    "id": 10,
+    "question": "Which of these are renewable energy sources?",
+    "answers": ["Solar", "Coal", "Wind", "Natural Gas"],
+    "correct_answer": ["Solar", "Wind"]
+  },
+  {
+    "id": 11,
+    "question": "Which languages are official in Switzerland?",
+    "answers": ["German", "French", "Italian", "Dutch"],
+    "correct_answer": ["German", "French", "Italian"]
+  },
+  {
+    "id": 12,
+    "question": "Which of these are valid file extensions for images?",
+    "answers": [".jpg", ".txt", ".png", ".docx"],
+    "correct_answer": [".jpg", ".png"]
+  },
+  {
+    "id": 13,
+    "question": "Which of these planets have rings?",
+    "answers": ["Saturn", "Uranus", "Neptune", "Mars"],
+    "correct_answer": ["Saturn", "Uranus", "Neptune"]
+  },
+  {
+    "id": 14,
+    "question": "Which of these are popular web development frameworks?",
+    "answers": ["Django", "React", "Flask", "Unity"],
+    "correct_answer": ["Django", "React", "Flask"]
+  },
+  {
+    "id": 15,
+    "question": "Which ocean is the largest by surface area?",
+    "answers": ["Atlantic", "Indian", "Pacific", "Arctic"],
+    "correct_answer": "Pacific"
+  },
+  {
+    "id": 16,
+    "question": "Which of these characters are from the Harry Potter series?",
+    "answers": ["Harry", "Frodo", "Hermione", "Gandalf"],
+    "correct_answer": ["Harry", "Hermione"]
+  },
+  {
+    "id": 17,
+    "question": "Which of these are types of cloud computing?",
+    "answers": ["IaaS", "SaaS", "PaaS", "CaaS"],
+    "correct_answer": ["IaaS", "SaaS", "PaaS"]
+  },
+  {
+    "id": 18,
+    "question": "Which of these are types of triangles?",
+    "answers": ["Isosceles", "Equilateral", "Hexagon", "Scalene"],
+    "correct_answer": ["Isosceles", "Equilateral", "Scalene"]
+  },
+  {
+    "id": 19,
+    "question": "Which of these are programming paradigms?",
+    "answers": ["Functional", "Procedural", "Mechanical", "Object-Oriented"],
+    "correct_answer": ["Functional", "Procedural", "Object-Oriented"]
+  },
+  {
+    "id": 20,
+    "question": "Which of the following are Olympic sports?",
+    "answers": ["Fencing", "Skateboarding", "Chess", "Swimming"],
+    "correct_answer": ["Fencing", "Skateboarding", "Swimming"]
+  }
+]

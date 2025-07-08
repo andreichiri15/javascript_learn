@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "question": "Which of the following are programming languages?",
+    "answers": ["Python", "HTML", "Java", "CSS"],
+    "correct_answer": ["Python", "Java"]
+  },
+  {
+    "id": 2,
+    "question": "Which planets in our solar system are gas giants?",
+    "answers": ["Earth", "Jupiter", "Mars", "Saturn"],
+    "correct_answer": ["Jupiter", "Saturn"]
+  },
+  {
+    "id": 3,
+    "question": "Which of these are valid HTTP methods?",
+    "answers": ["GET", "SEND", "POST", "FETCH"],
+    "correct_answer": ["GET", "POST"]
+  },
+  {
+    "id": 4,
+    "question": "Which of these animals are mammals?",
+    "answers": ["Dolphin", "Crocodile", "Whale", "Penguin"],
+    "correct_answer": ["Dolphin", "Whale"]
+  },
+  {
+    "id": 5,
+    "question": "Which of the following are JavaScript frameworks or libraries?",
+    "answers": ["React", "Laravel", "Angular", "Vue"],
+    "correct_answer": ["React", "Angular", "Vue"]
+  },
+  {
+    "id": 6,
+    "question": "What is the tallest mountain in the world?",
+    "answers": ["Mount Everest", "K2", "Kangchenjunga", "Lhotse"],
+    "correct_answer": "Mount Everest"
+  }
+]

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style_form.css">
+    <script src="dom_events/user_form.js" defer></script>
+    <title>User Form</title>
+</head>
+<body>
+    <div id="container">
+        <h2 id="heading">
+            User Details Form
+        </h2>
+        <form id="userForm">
+            <div class="form__group">
+                <label for="firstName">First name: </label>
+                <input type="text" name="firstName" id="firstname" required placeholder="Enter first name">
+            </div>
+            <div class="form__group">
+                <label for="lastName">Last name: </label>
+                <input type="text" name="lastName" id="lastname" required placeholder="Enter last name">
+            </div>
+            <div class="form__group">
+                <label for="email">Email: </label>
+                <input type="email" name="email" id="email" required placeholder="Enter email">
+            </div>
+            <button id="submit_button">
+                Submit
+            </button>
+        </form>
+    </div>
+</body>
+</html>

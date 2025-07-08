@@ -1,0 +1,65 @@
+.square{
+    width:50px;
+    height:50px;
+    background-color:rgb(249, 249, 249);
+    border: 2px solid black;
+    border-radius: 3px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'verdana';
+    color:black;
+}
+
+#grid {
+    display: grid;
+    grid-template-columns: repeat(3, 55px);
+    /* gap:2.5px */
+    justify-content: center;
+    height:100%;
+}
+
+.heading {
+    font-family: 'verdana';
+    font-size: 20px;
+    text-align: center;
+}
+
+.square:hover{
+    background-color:rgb(244, 243, 216);
+    box-shadow: 5px 5px 5px rgb(116, 121, 122);
+}
+
+#endgame{
+    /* text-align: center; */
+    display: flex;
+    justify-content: center;
+}
+
+#button:hover{
+    background-color:rgb(244, 243, 216);
+    cursor: pointer;
+}
+
+.cellInput{
+    /* display: flex; */
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.textInput{
+    text-align: center;
+    width: 60px;
+    height: 25px;
+    border: 3px solid black;
+    border-radius: 15%;
+}
+
+.textInput:hover{
+    background-color:rgb(244, 243, 216);
+}
+
+/* *{
+    outline: 1px solid red;
+} */

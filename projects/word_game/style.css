@@ -1,0 +1,92 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    user-select: none;
+    display: flex;
+    background-image: linear-gradient(#f4dec6, #f0cbb5);
+    justify-content: center;
+    overflow: hidden;
+    height: 100vh;
+}
+
+.formClass{
+    background-color: antiquewhite;
+    display:block;
+    width: 350px;
+    margin-bottom: 10px;
+    border: 2px solid black;
+    border-radius: 16px;
+    padding: 4px;
+}
+
+.beginDivClass{
+    height: 700px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    padding-right: 10px;
+}
+
+.formInput{
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.formInput:focus{
+    background-color: rgba(0, 0, 0, 0.2)
+}
+
+.formClass:hover{
+    box-shadow: 2px 2px 2px grey;
+}
+
+.gridClass{
+    display:grid;
+    /* grid-template-columns: repeat(3, 50px); */
+    margin-left: 150px;
+    text-align: center;
+}
+
+.squareClass{
+    height: 50px;
+    width: 50px;
+    border: 3px solid black;
+    font-size: 25px;
+    box-sizing: border-box;
+    align-items: center;
+    line-height: 50px;
+}
+
+.gameClass{
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    /* justify-content: center; */
+}
+
+.button{
+    text-align: center;
+    border-radius: 4px;
+    background-color: white;
+    margin-left: 7px;
+    transition: background-color .5s ease;
+}
+
+.button:hover{
+    color: white;
+    background-color: black;
+    filter: blur(.4px);
+}
+
+.button:active{
+    transform: translateY(2px);
+}
+
+.buttonGen{
+    height: 40px;
+    width: 140px;
+}
+
+.buttonGen:hover{
+    box-shadow: 3px 3px 3px grey;
+    transform: translateY(-2px);
+}

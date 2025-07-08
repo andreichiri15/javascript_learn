@@ -1,0 +1,57 @@
+body {
+    display: grid;
+    justify-content: center;
+    /* align-items: center; */
+    /* text-align: center; */
+}
+
+.answersList{
+    list-style-type: none;
+    font-family: 'verdana';
+    /* text-align: center; */
+    margin: 25px;
+    padding: 0;
+}
+
+.answersList > li{
+    /* border: 2px solid black; */
+    margin-bottom: .5px;
+    margin: 0;
+    padding: 0;
+}
+
+.answersList > li::before{
+    content: '';
+    display: inline-block;
+    margin-right: 5px;
+    width: 10px;
+    height: 10px;
+    border: 1px solid black;
+    /* border-radius: 50%;*/
+    border-radius: var(--radius, 50%);
+    background-color: var(--color, white);
+}
+
+.answersList > li::after{
+    /* --contentValue: ' 123'; */
+    display: inline-block;
+    margin-right: 5px;
+    width: 10px;
+    height: 10px;
+    /* content: var(--contentValue, '\2715'); */
+    content: attr(contentValue);
+    color: attr(colorValue);
+}
+
+.button {
+    text-align: center;
+    margin-top: 15px;
+    cursor: pointer;
+    /* margin-inline: auto; */
+    margin-left: 15px;
+}
+
+.divButton {
+    display: flex;
+    /* justify-content: center; */
+}

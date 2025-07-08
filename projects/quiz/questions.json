@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "question": "What is the capital of Australia?",
+    "answers": ["Sydney", "Melbourne", "Canberra", "Brisbane"],
+    "correct_answer": "Canberra"
+  },
+  {
+    "id": 2,
+    "question": "Which element has the chemical symbol 'O'?",
+    "answers": ["Oxygen", "Gold", "Osmium", "Oxide"],
+    "correct_answer": "Oxygen"
+  },
+  {
+    "id": 3,
+    "question": "Who wrote the play 'Romeo and Juliet'?",
+    "answers": ["William Shakespeare", "Charles Dickens", "Jane Austen", "Leo Tolstoy"],
+    "correct_answer": "William Shakespeare"
+  },
+  {
+    "id": 4,
+    "question": "Which planet is known as the Red Planet?",
+    "answers": ["Mars", "Venus", "Jupiter", "Mercury"],
+    "correct_answer": "Mars"
+  },
+  {
+    "id": 5,
+    "question": "In what year did the Titanic sink?",
+    "answers": ["1912", "1905", "1920", "1898"],
+    "correct_answer": "1912"
+  },
+  {
+    "id": 6,
+    "question": "Which video game franchise features characters named Link and Zelda?",
+    "answers": ["The Legend of Zelda", "Final Fantasy", "Metroid", "Dark Souls"],
+    "correct_answer": "The Legend of Zelda"
+  },
+  {
+    "id": 7,
+    "question": "What is the hardest natural substance on Earth?",
+    "answers": ["Diamond", "Quartz", "Obsidian", "Graphite"],
+    "correct_answer": "Diamond"
+  },
+  {
+    "id": 8,
+    "question": "Which artist painted the Mona Lisa?",
+    "answers": ["Leonardo da Vinci", "Pablo Picasso", "Michelangelo", "Claude Monet"],
+    "correct_answer": "Leonardo da Vinci"
+  },
+  {
+    "id": 9,
+    "question": "Which language has the most native speakers worldwide?",
+    "answers": ["Mandarin Chinese", "English", "Spanish", "Hindi"],
+    "correct_answer": "Mandarin Chinese"
+  },
+  {
+    "id": 10,
+    "question": "What is the tallest mountain in the world?",
+    "answers": ["Mount Everest", "K2", "Kangchenjunga", "Lhotse"],
+    "correct_answer": "Mount Everest"
+  }
+]

@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "question": "What is the capital of Australia?",
+    "answers": ["Sydney", "Melbourne", "Canberra", "Brisbane"],
+    "correct_answer": "Canberra"
+  },
+  {
+    "id": 2,
+    "question": "Which element has the chemical symbol 'O'?",
+    "answers": ["Oxygen", "Gold", "Osmium", "Oxide"],
+    "correct_answer": "Oxygen"
+  }
+]

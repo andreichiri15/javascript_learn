@@ -1,0 +1,20 @@
+let array = ['Stefan', 'Mihai', 'Nicu', 'Daniel', 'Dragos']
+
+// for (let name in array) { // indicii
+for (let name of array) { // direct valoarea
+    console.log(name)
+}
+
+let i = 0
+
+while (i < array.length) {
+    console.log(array[i++])
+}
+
+let new_array = []
+
+for (let name of array) {
+    new_array.push(name.toUpperCase())
+}
+
+console.log(new_array)
