@@ -11,7 +11,6 @@ let isDown = false;
 let offset = [0, 0]
 
 
-
 let countAddedWords
 
 let gameMatrix
@@ -29,7 +28,7 @@ function editForm(formDiv) {
     console.log(formDiv.id, $(`#${formDiv.id} > button`));
 
     // $(`button`).hide()
-    $(`button`).not(":last-child").hide()
+    $(`button`).not(":last").hide()
     $(`button:last`).prop('disabled', true)
 
     saveButton = document.createElement('button')
@@ -43,6 +42,8 @@ function editForm(formDiv) {
     cancelButton.textContent = 'Cancel'
 
     saveButton.addEventListener('click', () => {
+        $(`#${formDiv.id} > input`).attr('readonly', true)
+
         let currQuestion = $(`#${formDiv.id} > input:first`).val()
         let currAnswer = $(`#${formDiv.id} > input:last`).val()
 
@@ -66,7 +67,7 @@ function editForm(formDiv) {
         saveButton.remove()
         cancelButton.remove()
         // $(`button`).show()
-        $(`button`).not(":last-child").show()
+        $(`button`).not(":last").show()
         $(`button:last`).prop('disabled', false)
 
 
@@ -81,6 +82,8 @@ function editForm(formDiv) {
     })
 
     cancelButton.addEventListener('click', (e) => {
+        $(`#${formDiv.id} > input`).attr('readonly', true)
+
         $(`#${formDiv.id} > input:first`).val(initQuest)
         $(`#${formDiv.id} > input:last`).val(initAnsw)
 
@@ -112,6 +115,14 @@ function deleteForm(formDiv) {
 
     formDiv.innerHTML = ""
     formDiv.remove()
+
+    if (answers.filter((elem) => elem != null).length == nrCells - 1) {
+        generateQuestionForm()
+    } 
+
+    if (!map.has(formDiv)) {
+        return
+    }
 
     for (gridChild of map.get(formDiv)) {
         if (gridChild.countDifferentWords == 1) {
@@ -448,6 +459,7 @@ function generateQuestionForm() {
     answerInput = document.createElement('input')
     answerInput.placeholder = 'Raspuns'
     answerInput.id = 'answer'
+    answerInput.setAttribute('maxLength', nrCells)
     answerInput.classList.add('formInput')
     formDiv.insertAdjacentElement('beforeend', answerInput)
 
@@ -481,6 +493,10 @@ function generateQuestionForm() {
             saveQuestionForm(formDiv)
 
             counter++
+
+            if (answers.filter((elem) => elem != null).length == nrCells) {
+                return
+            } 
             
             generateQuestionForm()
 
@@ -488,7 +504,6 @@ function generateQuestionForm() {
         })
     })
 
-    // textInput.addEventListener("input", (e) => {
     $(`#${formDiv.id} > input`).on('input', function(e) {
         if (e.target.id == 'answer') {
             const existingPattern = /[^a-z]/;
@@ -498,11 +513,6 @@ function generateQuestionForm() {
             );
             
             e.target.value = e.target.value.replaceAll(newPattern, '')
-        }
-
-        if (e.target.value.length > nrCells && e.target.id == 'answer') {
-            e.target.value = e.target.value.slice(0, nrCells) // schimb cu nr de cifre al lui n 
-            alert(`Cuvantul nu poate fi mai lung decat numarul de celule al tabelei! (${nrCells})`)
         }
     })
 }
@@ -530,8 +540,7 @@ function getCellsPage() {
     divCells.style.textAlign = 'center'
     
     buttonCells.addEventListener('click', function() {
-        if (inputCells.value > maxValidCells) {
-            alert('Introduceti un numar de casute mai mic decat ' + maxValidCells)
+        if (inputCells.value == '') {
             return
         }
 
@@ -782,12 +791,8 @@ function generateRestOfGrid(e) {
         }
     }
 
-    // console.log(document.getElementById('gridID').children);
-
     console.log(gameMatrix);
 
-
-    // generateDownload(
     let resetButton = document.createElement('button')
     resetButton.classList.add('button')
     resetButton.classList.add('buttonGen')
@@ -869,8 +874,6 @@ function init() {
     document.body.insertAdjacentElement('beforeend', gameDiv)
 
     getCellsPage()
-
-    // generateQuestionForm()
 }
 
 init()
