@@ -20,7 +20,7 @@ body{
 }
 
 .beginDivClass{
-    height: 700px;
+    height: 600px;
     overflow-y: auto;
     scrollbar-width: thin;
     padding-right: 10px;

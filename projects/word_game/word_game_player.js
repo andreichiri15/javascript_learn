@@ -165,7 +165,15 @@ function determineDirAndSetHoverHistory(initDiv, destDiv) {
                 const distance = Math.sqrt(Math.pow(x - coord1.x, 2) + Math.pow(y - coord1.y, 2));
                 // if (distance < DISTANCE_THRESHOLD) {
                     // break;
-                if(y == coord1.y) {
+                if(!outsideGrid && y == coord1.y) {
+                    break;
+                }
+
+                if(!outsideGrid && Math.abs(y - coord1.y) > Math.abs(x - coord1.x) && y == coord1.y) {
+                    break;
+                }
+
+                if(!outsideGrid && Math.abs(y - coord1.y) <= Math.abs(x - coord1.x) && x == coord1.x) {
                     break;
                 }
             }

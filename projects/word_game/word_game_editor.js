@@ -1,5 +1,6 @@
 const maxValidCells = 10
 const distanceReff = 10
+const ITERATIONS = 10
 
 let counter
 let questions // ar trebui sa le fac const
@@ -55,9 +56,12 @@ function editForm(formDiv) {
             alert(`You can't have duplicate questions or answers!`)
             return
         }
-        questions[Number(formDiv.id.slice(7))] = currQuestion
-        answers[Number(formDiv.id.slice(7))] = currAnswer
-        answersToGenerate[Number(formDiv.id.slice(7))] = currAnswer
+
+        let editIndex = parseInt(formDiv.id.slice(7), 10) 
+
+        questions[editIndex] = currQuestion
+        answers[editIndex] = currAnswer
+        answersToGenerate[editIndex] = currAnswer
 
         saveButton.remove()
         cancelButton.remove()
@@ -90,10 +94,21 @@ function editForm(formDiv) {
 }
 
 function deleteForm(formDiv) {
-    questions.splice(formDiv.id.slice(7), 1)
+    console.log('before: ' + questions, answers)
 
-    answers.splice(formDiv.id.slice(7), 1)
-    answersToGenerate.splice(formDiv.id.slice(7), 1)
+    let deleteIndex = parseInt(formDiv.id.slice(7))
+
+    // questions.splice(deleteIndex, 1)
+
+    // answers.splice(deleteIndex, 1)
+    // answersToGenerate.splice(deleteIndex, 1)
+
+    questions[deleteIndex] = null
+
+    answers[deleteIndex] = null
+    answersToGenerate[deleteIndex] = null
+
+    console.log('after: ' + questions, answers)
 
     formDiv.innerHTML = ""
     formDiv.remove()
@@ -104,8 +119,6 @@ function deleteForm(formDiv) {
 
             let indexI = Math.floor(parseInt(gridChild.id.slice(2), 10) / nrCells)
             let indexJ = parseInt(gridChild.id.slice(2), 10) % nrCells
-
-            console.log(indexI, indexJ, gridChild, gameMatrix)
 
             gameMatrix[indexI][indexJ] = null
         }
@@ -259,6 +272,8 @@ function takeWordGrid(formDiv) {
 
             wordDiv.style.left = (lastPos.x + offset[0]) + 'px';
             wordDiv.style.top  = (lastPos.y + offset[1]) + 'px';
+
+            canPlaceWordDiv()
         }
     }
 
@@ -314,19 +329,7 @@ function takeWordGrid(formDiv) {
         document.removeEventListener('keydown', rotateEvent)
     })
 
-    document.addEventListener('mousemove', (e) => {
-        e.preventDefault();
-
-        if (!isDown) {
-            return
-        }
-
-        mousePosition = {x : e.clientX + window.scrollX, y : e.clientY + window.scrollY};
-        wordDiv.style.left = (mousePosition.x + offset[0]) + 'px';
-        wordDiv.style.top  = (mousePosition.y + offset[1]) + 'px';
-
-        lastPos = mousePosition
-
+    function canPlaceWordDiv() {
         let gridDiv = document.querySelector('#gridID');
 
         for (let child of wordDiv.children) {
@@ -368,6 +371,23 @@ function takeWordGrid(formDiv) {
 
             // break
         }
+    }
+
+    document.addEventListener('mousemove', (e) => {
+        e.preventDefault();
+
+        if (!isDown) {
+            return
+        }
+
+        mousePosition = {x : e.clientX + window.scrollX, y : e.clientY + window.scrollY};
+        wordDiv.style.left = (mousePosition.x + offset[0]) + 'px';
+        wordDiv.style.top  = (mousePosition.y + offset[1]) + 'px';
+
+        lastPos = mousePosition
+
+        canPlaceWordDiv()
+
     }, true)
 }
 
@@ -667,6 +687,10 @@ function placeWord(word) {
 
     for (let i = 0; i < nrCells; i++) {
         for (let j = 0; j < nrCells; j++) {
+            if (gameMatrix[i][j] != null) {
+                continue
+            }
+
             for (let k = 0; k < directions.length; k++) {
                 startPositions.push([i, j, directions[k], Math.random()])
             }
@@ -674,6 +698,8 @@ function placeWord(word) {
     }
 
     startPositions.sort((a, b) => a[3] - b[3])
+
+    console.log(startPositions)
 
     startPositions.map((elem) => elem.splice(3, 1))
 
@@ -691,10 +717,26 @@ function generateLetters() {
     let sortedAnswers = [...answersToGenerate]
     sortedAnswers.sort((a, b) => b.length - a.length)
 
-    for (let word of sortedAnswers) {
-        if(!placeWord(word)) {
-            console.log(`couldn't generate`);
-            break;
+    let initMatrix = gameMatrix.map(function (arr) {
+        return arr.slice()
+    })
+
+    for (let iter = 0; iter < ITERATIONS; iter++) {
+        let placedAllWords = true
+
+        for (let word of sortedAnswers) {
+            if(!placeWord(word)) {
+                placedAllWords = false
+                break;
+            }
+        }
+
+        if (placedAllWords) {
+            break
+        } else {
+            gameMatrix = initMatrix.map(function (arr) {
+                return arr.slice()
+            })
         }
     }
 
@@ -702,11 +744,15 @@ function generateLetters() {
 }
 
 function generateRestOfGrid(e) {
-    
     if (answers.length == 0) {
         alert('Adauga cel putin o intrebare si un raspuns!')
         return
     }
+
+    questions = questions.filter((elem) => elem != null)
+    answers = answers.filter((elem) => elem != null)
+    answersToGenerate = answersToGenerate.filter((elem) => elem != null)
+
     
     let genButton = e.target
     genButton.style.display = 'none'
