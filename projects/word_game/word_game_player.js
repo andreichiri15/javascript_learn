@@ -375,17 +375,26 @@ function giveUpAction(e) {
             continue
         }
 
-        answerDirection.replaceAll('-', '_')
-
         stepObj = {
             'horizontal': [1, 0],
             'vertical': [0, 1],
-            'diagonal': [1, 0],
-            '2nd-diagonal': [1, 0],
-            'horizontal_reverse': [1, 0],
-            'vertical-reverse': [1, 0],
-            'diagonal-reverse': [1, 0],
-            '2nd-diagonal-reverse': [1, 0],
+            'diagonal': [1, 1],
+            '2nd-diagonal': [-1, 1],
+            'horizontal-reverse': [-1, 0],
+            'vertical-reverse': [0, -1],
+            'diagonal-reverse': [-1, -1],
+            '2nd-diagonal-reverse': [1, -1],
+        }
+
+        let xCurr = answerPos.x, yCurr = answerPos.y
+        let step = stepObj[answerDirection]
+
+        for (let i = 0; i < answer.length; i++) {
+            // TODO
+
+
+            xCurr += step[0]
+            yCurr += step[1]
         }
 
 
