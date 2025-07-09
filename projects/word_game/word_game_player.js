@@ -1,4 +1,4 @@
-let filepath = './word_game_requisite_test.json'
+let filepath = './word_game_requisite_test_2.json'
 let globalData
 
 let currentSelection
@@ -360,12 +360,51 @@ function moveOutsideGridEvent(e) {
     lastClosest = minDiv
 }
 
+function giveUpAction(e) {
+    console.log(globalData.formMap, typeof globalData.formMap)
+
+    for (answerInfo of Object.entries(globalData.formMap)) {
+        let answer = answerInfo[0]
+        let answerPos = {
+            x: answerInfo[1][0],
+            y: answerInfo[1][1]
+        }
+        let answerDirection = answerInfo[1][2]
+
+        if (!globalData.answers.includes(answer)) {
+            continue
+        }
+
+        answerDirection.replaceAll('-', '_')
+
+        stepObj = {
+            'horizontal': [1, 0],
+            'vertical': [0, 1],
+            'diagonal': [1, 0],
+            '2nd-diagonal': [1, 0],
+            'horizontal_reverse': [1, 0],
+            'vertical-reverse': [1, 0],
+            'diagonal-reverse': [1, 0],
+            '2nd-diagonal-reverse': [1, 0],
+        }
+
+
+
+        
+    }
+}
+
 function createGrid() {
+    let rightSideDiv = document.createElement('div')
+    flexDiv.insertAdjacentElement('beforeend', rightSideDiv)
+
+    rightSideDiv.classList.add('right-side-wrapper')
+
     gridDiv = document.createElement('div');
     gridDiv.classList.add('gridClass')
     gridDiv.style.gridTemplateColumns = `repeat(${globalData.nrCells}, 50px)`
 
-    flexDiv.insertAdjacentElement('beforeend', gridDiv)
+    rightSideDiv.insertAdjacentElement('beforeend', gridDiv)
 
     for (let i = 0; i < globalData.nrCells; i++) {
         for (let j = 0; j < globalData.nrCells; j++) {
@@ -385,6 +424,14 @@ function createGrid() {
             squareDiv.setAttribute("colorSquare", squaresColor)
         }
     }
+
+    let giveUpButton = document.createElement('button')
+    giveUpButton.textContent = 'Give Up'
+    giveUpButton.classList.add('button')
+    giveUpButton.classList.add('buttonGen')
+    rightSideDiv.insertAdjacentElement('beforeend', giveUpButton)
+
+    giveUpButton.addEventListener('click', giveUpAction)
 
     gridDiv.addEventListener('mouseleave', leaveGridEvent)
 }

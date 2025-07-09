@@ -10,6 +10,7 @@ let nrCells
 let isDown = false;
 let offset = [0, 0]
 
+let directions = ['horizontal', 'vertical', 'diagonal', '2nd-diagonal', 'horizontal-reverse', 'vertical-reverse', 'diagonal-reverse', '2nd-diagonal-reverse']
 
 let countAddedWords
 
@@ -71,12 +72,18 @@ function editForm(formDiv) {
         $(`button:last`).prop('disabled', false)
 
 
-        if (map.has(formDiv) && map.get(formDiv).length > 0) {
-            for (squareChild of map.get(formDiv)) {
+        if (map.has(formDiv) && map.get(formDiv).list.length > 0) {
+            for (squareChild of map.get(formDiv).list) {
                 squareChild.textContent = ""
             }
         }
-        map.set(formDiv, [])
+
+        let initValue = {
+            list: [],
+            direction: 'not defined'
+        }
+
+        map.set(formDiv, initValue)
 
         console.log(answers, questions)
     })
@@ -124,7 +131,7 @@ function deleteForm(formDiv) {
         return
     }
 
-    for (gridChild of map.get(formDiv)) {
+    for (gridChild of map.get(formDiv).list) {
         if (gridChild.countDifferentWords == 1) {
             gridChild.textContent = ""
 
@@ -147,7 +154,12 @@ function takeWordGrid(formDiv) {
     // $(`button`).hide()
     $('button').prop('disabled', true)
 
-    map.set(formDiv, [])
+    let initValue = {
+        list: [],
+        direction: 'not defined'
+    }
+
+    map.set(formDiv, initValue)
 
     wordDiv = document.createElement('div')
     wordDiv.id = 'wordId'
@@ -303,7 +315,6 @@ function takeWordGrid(formDiv) {
 
         isDown = false;
 
-        nrRotated = 0
         let boolAddedWord = false
 
         for (let child of wordDiv.children) {
@@ -324,10 +335,12 @@ function takeWordGrid(formDiv) {
                 gameMatrix[indexI][indexJ] = child.tempGridChild.textContent.toUpperCase();
 
                 mapValue = map.get(formDiv)
-                mapValue.push(child.tempGridChild)
+                mapValue.list.push(child.tempGridChild)
+                mapValue.direction = directions[nrRotated]
             }
-
         }
+
+        nrRotated = 0
 
         if (boolAddedWord) {
             $(`#${formDiv.id} > button:last`).hide()
@@ -604,12 +617,15 @@ function generateWordsGrid() {
     }
 }
 
-function generateDownload() {
+function generateDownload(formMap) {
+    console.log(formMap)
+
     obj = {
         "nrCells":nrCells,
         "gameMatrix":gameMatrix,
         "questions":questions,
-        "answers":answers
+        "answers":answers,
+        "formMap":Object.fromEntries(formMap)
     }
 
     var blob = new Blob([JSON.stringify(obj)], { type: 'text/plain' });
@@ -665,11 +681,11 @@ function checkIfCanPlaceWord(word, pos) {
     positionsToFill = []
 
     while (indexWord < word.length && currX < nrCells && currY < nrCells && currX >= 0 && currY >= 0) {
-        if (gameMatrix[currX][currY] != null && word[indexWord].toUpperCase() != gameMatrix[currX][currY]) {
+        if (gameMatrix[currY][currX] != null && word[indexWord].toUpperCase() != gameMatrix[currY][currX]) {
             break
         }
 
-        positionsToFill.push([currX, currY])
+        positionsToFill.push([currY, currX])
 
         currX += xStep
         currY += yStep
@@ -689,10 +705,8 @@ function checkIfCanPlaceWord(word, pos) {
     return true
 }
 
-function placeWord(word) {
+function placeWord(word, mapForm) {
     startPositions = []
-
-    directions = ['horizontal', 'vertical', 'diagonal', '2nd-diagonal', 'horizontal-reverse', 'vertical-reverse', 'diagonal-reverse', '2nd-diagonal-reverse']
 
     for (let i = 0; i < nrCells; i++) {
         for (let j = 0; j < nrCells; j++) {
@@ -715,6 +729,7 @@ function placeWord(word) {
     for (pos of startPositions) {
         if (checkIfCanPlaceWord(word, pos)) {
             // todo
+            mapForm.set(word, pos)
             return true
         }
     }
@@ -722,7 +737,7 @@ function placeWord(word) {
     return false
 }
 
-function generateLetters() {
+function generateLetters(mapForm) {
     let sortedAnswers = [...answersToGenerate]
     sortedAnswers.sort((a, b) => b.length - a.length)
 
@@ -734,7 +749,7 @@ function generateLetters() {
         let placedAllWords = true
 
         for (let word of sortedAnswers) {
-            if(!placeWord(word)) {
+            if(!placeWord(word, mapForm)) {
                 placedAllWords = false
                 break;
             }
@@ -762,6 +777,18 @@ function generateRestOfGrid(e) {
     answers = answers.filter((elem) => elem != null)
     answersToGenerate = answersToGenerate.filter((elem) => elem != null)
 
+    let mapForm = new Map()
+
+    for (formDiv of beginDiv.children) {
+        if (map.has(formDiv)) {
+            squareId = parseInt(map.get(formDiv).list[0].id.slice(2), 10)
+
+            indexI = Math.floor(squareId / nrCells)
+            indexJ = squareId % nrCells
+
+            mapForm.set(formDiv.children[3].value, [indexI, indexJ, map.get(formDiv).direction])
+        }
+    }
     
     let genButton = e.target
     genButton.style.display = 'none'
@@ -771,8 +798,10 @@ function generateRestOfGrid(e) {
     console.log(gameMatrix);
 
     if (answersToGenerate.length > 0) {
-        generateLetters()
+        generateLetters(mapForm)
     }
+
+    console.log(mapForm)
 
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
@@ -792,6 +821,8 @@ function generateRestOfGrid(e) {
     }
 
     console.log(gameMatrix);
+
+    generateDownload(mapForm)
 
     let resetButton = document.createElement('button')
     resetButton.classList.add('button')
