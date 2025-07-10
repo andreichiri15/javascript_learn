@@ -768,13 +768,14 @@ function generateLetters(mapForm) {
 }
 
 function generateRestOfGrid(e) {
+    answers = answers.filter((elem) => elem != null)
+    
     if (answers.length == 0) {
         alert('Adauga cel putin o intrebare si un raspuns!')
         return
     }
 
     questions = questions.filter((elem) => elem != null)
-    answers = answers.filter((elem) => elem != null)
     answersToGenerate = answersToGenerate.filter((elem) => elem != null)
 
     let mapForm = new Map()

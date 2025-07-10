@@ -8,6 +8,8 @@ let lastTarget
 let lastDirection
 let countCorrectAnswers
 
+let answersRemaining
+
 let flexDiv
 let startDiv
 let direction
@@ -57,11 +59,11 @@ function getDirection(coord1, coord2) {
     
     // Pure cases
     if (dx === 0) {
-        return dy < 0 ? 'vertical' : 'vertical inverse';
+        return dy < 0 ? 'vertical' : 'vertical reverse';
     }
         
     if (dy === 0) {
-        return dx < 0 ? 'horizontal' : 'horizontal inverse';
+        return dx < 0 ? 'horizontal' : 'horizontal reverse';
     }
     
     // Diagonal or near-diagonal cases
@@ -70,21 +72,21 @@ function getDirection(coord1, coord2) {
             return '2nd diagonal';
         }
         if (dx > 0 && dy > 0) {
-            return 'diagonal inverse';
+            return 'diagonal reverse';
         }
         if (dx < 0 && dy < 0) {
             return 'diagonal';
         }
         if (dx < 0 && dy > 0) {
-            return '2nd diagonal inverse';
+            return '2nd diagonal reverse';
         }
     }
     
     // Non-diagonal cases
     if (absDx > absDy) {
-        return dx < 0 ? 'horizontal' : 'horizontal inverse';
+        return dx < 0 ? 'horizontal' : 'horizontal reverse';
     }
-    return dy < 0 ? 'vertical' : 'vertical inverse';
+    return dy < 0 ? 'vertical' : 'vertical reverse';
 }
 
 function determineDirAndSetHoverHistory(initDiv, destDiv) {
@@ -97,8 +99,6 @@ function determineDirAndSetHoverHistory(initDiv, destDiv) {
         y: Math.floor(parseInt(initDiv.id) / Number(globalData.nrCells)),
         x: parseInt(initDiv.id) % Number(globalData.nrCells)
     }
-
-    console.log('intraaa');
     
     if (destDiv != lastTarget) {
         hoverHistory = []
@@ -119,25 +119,25 @@ function determineDirAndSetHoverHistory(initDiv, destDiv) {
             case 'horizontal':
                 xStep = 1; yStep = 0;
                 break;
-            case 'horizontal inverse':
+            case 'horizontal reverse':
                 xStep = -1; yStep = 0;
                 break;
             case 'vertical':
                 xStep = 0; yStep = 1;
                 break;
-            case 'vertical inverse':
+            case 'vertical reverse':
                 xStep = 0; yStep = -1;
                 break;
             case 'diagonal':
                 xStep = 1; yStep = 1;
                 break;
-            case 'diagonal inverse':
+            case 'diagonal reverse':
                 xStep = -1; yStep = -1;
                 break;
             case '2nd diagonal':
                 xStep = -1; yStep = 1;
                 break;
-            case '2nd diagonal inverse':
+            case '2nd diagonal reverse':
                 xStep = 1; yStep = -1;
                 break;
             default:
@@ -153,11 +153,11 @@ function determineDirAndSetHoverHistory(initDiv, destDiv) {
             currDiv.style.backgroundColor = 'rgb(210, 211, 174)';
             hoverHistory.push(currDiv);
             
-            if ((direction == 'horizontal' || direction == 'horizontal inverse') && x == coord1.x) {
+            if ((direction == 'horizontal' || direction == 'horizontal reverse') && x == coord1.x) {
                 break
             }
 
-            if ((direction == 'vertical' || direction == 'vertical inverse') && y == coord1.y) {
+            if ((direction == 'vertical' || direction == 'vertical reverse') && y == coord1.y) {
                 break
             }
 
@@ -201,7 +201,71 @@ function moveSelectSquare(e) {
     }
 
     determineDirAndSetHoverHistory(startDiv, e.target)
-    
+}
+
+function markCorrectAnswer(startSelection, currentSelection, borderColor, selectionDirection) {
+    let div = document.createElement('div')
+    // div.id = 'correctAnswer'
+    div.classList.add('answerMarking')
+
+    var height = startSelection.getBoundingClientRect().height, width = currentSelection.length * (height);
+
+    gridDiv.insertAdjacentElement('beforeend', div)
+    div.style.width = `${width}px`
+    div.style.height = `${height}px`
+    div.style.backgroundColor = 'rgba(255, 255, 255, 0)'
+    div.style.border = `4px solid ${borderColor}`
+    div.style.borderRadius = '25px'
+    div.style.pointerEvents = 'none'
+    div.style.boxSizing = 'border-box'
+
+    div.style.position = 'absolute'
+    div.style.top = startSelection.offsetTop + 'px'
+    div.style.left = startSelection.offsetLeft + 'px'
+
+    if (selectionDirection.includes('horizontal reverse')) {
+        console.log('intru aici?')
+        div.style.left = startSelection.offsetLeft - height * (currentSelection.length - 1) + 'px'
+    }
+
+    if (selectionDirection.includes('vertical')) {
+        console.log('verticall');
+        div.style.left = startSelection.offsetLeft + height + 'px'
+        if (selectionDirection.includes('reverse')) {
+            div.style.top = startSelection.offsetTop - height * (currentSelection.length - 1) + 'px'
+        }
+        div.style.transform = `rotate(${90}deg)`
+        div.style.transformOrigin = '0 0'
+    } else if (selectionDirection.includes('diagonal')) {
+        
+        if (selectionDirection.includes('2nd')) {
+            if (selectionDirection.includes('reverse')) {
+                div.style.left = startSelection.offsetLeft - height / 4 + 'px'
+                div.style.top = startSelection.offsetTop + height / 2 + 'px'
+                div.style.transform = `rotate(${-45}deg)`
+
+            } else {
+                div.style.left = startSelection.offsetLeft * height / 4 + 'px'
+                div.style.top = startSelection.offsetTop + height / 2 + 'px'
+                div.style.transform = `rotate(${135}deg)`
+            }
+
+        } else {
+            if (selectionDirection.includes('reverse')) {
+                div.style.left = startSelection.offsetLeft + height / 2 + 'px'
+                div.style.top = startSelection.offsetTop + 1.5 * height + 'px'
+                div.style.transform = `rotate(${-135}deg)`
+            } else {
+                div.style.left = startSelection.offsetLeft + height / 2 + 'px'
+                div.style.top = startSelection.offsetTop - height / 4 + 'px'
+                div.style.transform = `rotate(${45}deg)`
+            }
+        }
+
+        div.style.transformOrigin = '0 0'
+        div.style.width = width * Math.sqrt(2) - (height / 4) * Math.sqrt(2) + 'px'
+        // div.style.height = height * Math.sqrt(2) + 'px'
+    }
 }
 
 function stopSelection(e = null) {
@@ -217,76 +281,15 @@ function stopSelection(e = null) {
 
     currentSelection = hoverHistory.map((elm) => elm.textContent).join('');
 
-    if (globalData.answers.includes(currentSelection.toLowerCase())) {
+    if (answersRemaining.includes(currentSelection.toLowerCase())) {
         countCorrectAnswers++;
 
-        let div = document.createElement('div')
-        div.id = 'correctAnswer'
-
-        var height = hoverHistory[0].getBoundingClientRect().height, width = currentSelection.length * (height);
-
-        gridDiv.insertAdjacentElement('beforeend', div)
-        div.style.width = `${width}px`
-        div.style.height = `${height}px`
-        div.style.backgroundColor = 'rgba(255, 255, 255, 0)'
-        div.style.border = '4px solid green'
-        div.style.borderRadius = '25px'
-        div.style.pointerEvents = 'none'
-        div.style.boxSizing = 'border-box'
-
-        div.style.position = 'absolute'
-        div.style.top = hoverHistory[0].offsetTop + 'px'
-        div.style.left = hoverHistory[0].offsetLeft + 'px'
-
-        var index = globalData.answers.indexOf(currentSelection.toLowerCase())
-        // console.log(flexDiv.children[0].children[index].children[1]);
+        var index = answersRemaining.indexOf(currentSelection.toLowerCase())
         flexDiv.children[0].children[index].children[1].value = currentSelection.toLowerCase()
-        if (direction.includes('horizontal inverse')) {
-            div.style.left = hoverHistory[0].offsetLeft - height * (hoverHistory.length - 1) + 'px'
-        }
 
-        if (direction.includes('vertical')) {
-            console.log('verticall');
-            div.style.left = hoverHistory[0].offsetLeft + height + 'px'
-            if (direction.includes('inverse')) {
-                div.style.top = hoverHistory[0].offsetTop - height * (hoverHistory.length - 1) + 'px'
-            }
-            div.style.transform = `rotate(${90}deg)`
-            div.style.transformOrigin = '0 0'
-        } else if (direction.includes('diagonal')) {
-            
-            if (direction.includes('2nd')) {
-                if (direction.includes('inverse')) {
-                    div.style.left = hoverHistory[0].offsetLeft - height / 4 + 'px'
-                    div.style.top = hoverHistory[0].offsetTop + height / 2 + 'px'
-                    div.style.transform = `rotate(${-45}deg)`
-
-                } else {
-                    // TODO aici s-ar putea sa nu mearga
-                    div.style.left = hoverHistory[0].offsetLeft * height / 4 + 'px'
-                    div.style.top = hoverHistory[0].offsetTop + height / 2 + 'px'
-                    div.style.transform = `rotate(${135}deg)`
-                }
-
-            } else {
-                if (direction.includes('inverse')) {
-                    div.style.left = hoverHistory[0].offsetLeft + height / 2 + 'px'
-                    div.style.top = hoverHistory[0].offsetTop + 1.5 * height + 'px'
-                    div.style.transform = `rotate(${-135}deg)`
-                } else {
-                    div.style.left = hoverHistory[0].offsetLeft + height / 2 + 'px'
-                    div.style.top = hoverHistory[0].offsetTop - height / 4 + 'px'
-                    div.style.transform = `rotate(${45}deg)`
-                }
-            }
-
-            div.style.transformOrigin = '0 0'
-            div.style.width = width * Math.sqrt(2) - (height / 4) * Math.sqrt(2) + 'px'
-            // div.style.height = height * Math.sqrt(2) + 'px'
-        }
-
-        // globalData.answers.splice(index, 1)
-        globalData.answers[index] = null;
+        markCorrectAnswer(hoverHistory[0], currentSelection, 'green', direction)
+        
+        answersRemaining[index] = null;
     }
     
     for (child of gridDiv.children) {
@@ -295,7 +298,7 @@ function stopSelection(e = null) {
     hoverHistory = []
     inSelection = false
 
-    if (countCorrectAnswers == globalData.answers.length) {
+    if (countCorrectAnswers == answersRemaining.length) {
         flexDiv.previousElementSibling.textContent = 'You found all the answers!'
     }
 }
@@ -371,35 +374,45 @@ function giveUpAction(e) {
         }
         let answerDirection = answerInfo[1][2]
 
-        if (!globalData.answers.includes(answer)) {
+        if (!answersRemaining.includes(answer)) {
             continue
         }
 
-        stepObj = {
-            'horizontal': [1, 0],
-            'vertical': [0, 1],
-            'diagonal': [1, 1],
-            '2nd-diagonal': [-1, 1],
-            'horizontal-reverse': [-1, 0],
-            'vertical-reverse': [0, -1],
-            'diagonal-reverse': [-1, -1],
-            '2nd-diagonal-reverse': [1, -1],
-        }
+        answerDirection = answerDirection.replaceAll('-', ' ')
 
-        let xCurr = answerPos.x, yCurr = answerPos.y
-        let step = stepObj[answerDirection]
+        let squareId = parseInt(globalData.nrCells, 10) * parseInt(answerPos.y, 10) + parseInt(answerPos.x, 10) + 'square'
 
-        for (let i = 0; i < answer.length; i++) {
-            // TODO
+        let divStart = document.getElementById(squareId)
 
+        markCorrectAnswer(divStart, answer, 'red', answerDirection)
+        console.log(divStart, answer, answerDirection)
+    }
 
-            xCurr += step[0]
-            yCurr += step[1]
-        }
+    e.target.nextElementSibling.style.display = 'inline'
+    e.target.style.display = 'none'
+}
 
+function resetAction(e) {
+    e.target.previousElementSibling.style.display = 'inline'
+    e.target.style.display = 'none'
 
+    currentSelection = []
+    hoverHistory = []
+    inSelection = false
+    countCorrectAnswers = 0
 
-        
+    answersRemaining = [...globalData.answers]
+
+    let allMarkings = document.querySelectorAll('.answerMarking')
+
+    for (let answerMarking of allMarkings) {
+        answerMarking.remove()
+    }
+
+    let allInputs = document.querySelectorAll('input')
+
+    for (let input of allInputs) {
+        input.value = 'Not answered yet.'
     }
 }
 
@@ -433,6 +446,8 @@ function createGrid() {
             squareDiv.setAttribute("colorSquare", squaresColor)
         }
     }
+    
+    gridDiv.addEventListener('mouseleave', leaveGridEvent)
 
     let giveUpButton = document.createElement('button')
     giveUpButton.textContent = 'Give Up'
@@ -442,7 +457,16 @@ function createGrid() {
 
     giveUpButton.addEventListener('click', giveUpAction)
 
-    gridDiv.addEventListener('mouseleave', leaveGridEvent)
+
+    let resetButton = document.createElement('button')
+    resetButton.textContent = 'Reset'
+    resetButton.classList.add('button')
+    resetButton.classList.add('buttonGen')
+    rightSideDiv.insertAdjacentElement('beforeend', resetButton)
+
+    resetButton.style.display = 'none'
+
+    resetButton.addEventListener('click', resetAction)
 }
 
 function createQuestionDiv() {
@@ -451,7 +475,7 @@ function createQuestionDiv() {
 
     flexDiv.insertAdjacentElement('beforeend', questionSectionDiv)
 
-    for (let i = 0; i < globalData.answers.length; i++) {
+    for (let i = 0; i < answersRemaining.length; i++) {
         let questionAnswerDiv = document.createElement('div')
         questionSectionDiv.insertAdjacentElement('beforeend', questionAnswerDiv)
 
@@ -487,6 +511,8 @@ function init() {
     hoverHistory = []
     inSelection = false
     countCorrectAnswers = 0
+
+    answersRemaining = [...globalData.answers]
 
     let bigDiv = document.createElement('div')
     document.body.insertAdjacentElement('beforeend', bigDiv)
