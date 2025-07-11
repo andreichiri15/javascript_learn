@@ -1,0 +1,35 @@
+.game-container{
+    display: flex;
+    justify-content: center;
+    column-gap: 20px;
+}
+
+.board{
+    display: grid;
+    grid-template-columns: repeat(3, 5rem);
+}
+
+.button{
+    text-align: center;
+    width: 5rem;
+    height: 2rem;
+}
+
+.button-section-container{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.square{
+    width: 5rem;
+	height: 5rem;
+	padding: 0;
+	border: 1px solid black;
+	color: transparent;
+    font-size: 4rem;
+    color: black;
+    text-align: center;
+}
