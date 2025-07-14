@@ -2,6 +2,7 @@ import Button from './shared/Button'
 import QuestionCard from './QuestionCard'
 import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
+import NR_QUEST from './shared/cosntants'
 
 export default function QuestionSections({data, registerAnswer}) {
     const [currentIndex, setCurrentIndex] = useState(0)
@@ -25,20 +26,13 @@ export default function QuestionSections({data, registerAnswer}) {
             alert("Select an answer before submitting!")
             return
         }
-
-        if (currentIndex + 1 == 10) {
+        
+        registerAnswer(shuffledAnswers.current[currentPressed.current], data[currentIndex].correct_answer)
+    
+        if (currentIndex + 1 == NR_QUEST) {
             navigate('/results')
             return
         }
-
-        // if (shuffledAnswers.current[currentPressed.current] == data[currentIndex].correct_answer) {
-        //     console.log('raspuns corect')
-
-        // } else {
-        //     console.log('raspuns gresit')
-        // }
-
-        registerAnswer(shuffledAnswers.current[currentPressed.current], data[currentIndex].correct_answer)
 
         shuffledAnswers.current = shuffleArray([...data[currentIndex + 1].incorrect_answers, data[currentIndex + 1].correct_answer])
         console.log(atob(shuffledAnswers.current[0]))

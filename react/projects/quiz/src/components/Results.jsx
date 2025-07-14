@@ -25,7 +25,7 @@ export default function Results({data, answerHistory}) {
 
     return (
         <div className="result-page">
-            <header>These are your results</header>
+            <header className='header'>These are your results</header>
             <main>
                 {renderResults()}
                 <Button
