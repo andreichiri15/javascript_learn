@@ -1,0 +1,46 @@
+import './App.css'
+import WorldMap from './components/WorldMap'
+import RightSideMenu from './components/RightSideMenu'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import LogInMenu from './components/LogInMenu'
+import { useState } from 'react'
+import Burger from './components/Burger'
+
+function App() {
+	const [isOpened, setIsOpened] = useState(false)
+	const [isLoggedIn, setIsLoggedIn] = useState(false)
+	const [markerMode, setMarkerMode] = useState(0)
+
+	const toggleMenu = () => {
+		setIsOpened((prevState) => !prevState)
+	}
+
+	const toggleLogIn = () => {
+		setIsLoggedIn((prevState) => !prevState)
+	}
+
+	return (
+		<BrowserRouter>
+			<Routes>
+				<Route 
+					path= '/map'
+					element={
+						<div className='main-container'>
+							<WorldMap markerMode={markerMode} setMarkerMode={setMarkerMode} isLoggedIn={isLoggedIn}></WorldMap>
+							<div>
+								{isOpened && <RightSideMenu setMarkerMode={setMarkerMode} toggleMenu={toggleMenu} isOpened={isOpened}></RightSideMenu>}
+								<Burger toggleMenu={toggleMenu} isOpened={isOpened}></Burger>
+							</div>
+						</div>
+					}/>
+				<Route
+					path = '/login'
+					element = {
+						<LogInMenu toggleLogIn={toggleLogIn}></LogInMenu>
+					}/>
+			</Routes>
+		</BrowserRouter>
+	)
+}
+
+export default App
