@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
 
-export default function Menu({toggleMenu, isOpened, setMarkerMode}) {
+export default function Menu({toggleMenu, setMarkerMode}) {
     const navigate = useNavigate()
 
     return (

@@ -33,11 +33,17 @@ function App() {
 							</div>
 						</div>
 					}/>
-				<Route
-					path = '/login'
-					element = {
-						<LogInMenu toggleLogIn={toggleLogIn}></LogInMenu>
-					}/>
+				{['/login', '/'].map((path, index) => {
+					return (
+						<>
+							<Route
+								path = {path}
+								element = {
+									<LogInMenu toggleLogIn={toggleLogIn}></LogInMenu>
+								}/>
+						</>	
+					)
+				})}
 			</Routes>
 		</BrowserRouter>
 	)
