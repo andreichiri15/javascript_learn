@@ -49,28 +49,30 @@ export default function LogInMenu({toggleLogIn}) {
     }
 
     return (
-        <div className="login-container">
-            <form>
-                <h2>Login to your account</h2>
-                <h3>Username</h3>
-                <input onChange={(e) => onChangeHandle(e, 0)} type='text' placeholder="username"/>
-                <h3>Password</h3>
-                <input onChange={(e) => onChangeHandle(e, 1)} type='password' placeholder="password"/>
+        <div className="login-wrapper">
+            <div className="login-container">
+                <form>
+                    <h2>Login to your account</h2>
+                    <h3>Username</h3>
+                    <input onChange={(e) => onChangeHandle(e, 0)} type='text' placeholder="username"/>
+                    <h3>Password</h3>
+                    <input onChange={(e) => onChangeHandle(e, 1)} type='password' placeholder="password"/>
 
-                <div className="buttons-container">
-                    <Button onClick={clickLoginHandle}>Login</Button>
-                    <Button>Register</Button>
-                </div>
+                    <div className="buttons-container">
+                        <Button onClick={clickLoginHandle}>Login</Button>
+                        <Button>Register</Button>
+                    </div>
 
-                <div>
-                    {passErrors.map((error, index) => {
-                        return (
-                            <div key = {index} >{error}</div>
-                        )
-                    })}
-                </div>
-            </form>
-            {/* <Button></Button> */}
+                    <div>
+                        {passErrors.map((error, index) => {
+                            return (
+                                <div key = {index} >{error}</div>
+                            )
+                        })}
+                    </div>
+                </form>
+                {/* <Button></Button> */}
+            </div>
         </div>
     )
 }

@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import LogInMenu from './components/LogInMenu'
 import { useState } from 'react'
 import Burger from './components/Burger'
+import AboutPage from './components/AboutPage'
 
 function App() {
 	const [isOpened, setIsOpened] = useState(false)
@@ -44,6 +45,12 @@ function App() {
 						</>	
 					)
 				})}
+				<Route
+					path='/about'
+					element={
+						<AboutPage/>
+					}
+				/>
 			</Routes>
 		</BrowserRouter>
 	)
