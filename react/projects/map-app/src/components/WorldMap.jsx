@@ -1,20 +1,18 @@
-import { MapContainer, TileLayer, Marker, useMapEvents, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, useMapEvents, Popup, Tooltip } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { v4 as uuidv4 } from 'uuid';
 
 import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
-import PopupForm from "./PopupForm";
 import SearchBar from "./SearchBar";
 
-export default function WorldMap({isLoggedIn, markerMode, setMarkerMode}) {
+export default function WorldMap({setStartedEdit, isLoggedIn, markers, setMarkers, markerMode, setMarkerMode, changeCurrentSelection, setIsOpened}) {
     const mapRef = useRef(null);
 	const latitude = 51.505;
 	const longitude = -0.09;
 
-    const [markers, setMarkers] = useState([])
-    const [startedEdit, setStartedEdit] = useState(false)
     const [editInfo, setEditInfo] = useState(true)
+    const [showCustomPopup, setShowCustomPopup] = useState(false)
     
     const navigate = useNavigate()
 
@@ -29,7 +27,8 @@ export default function WorldMap({isLoggedIn, markerMode, setMarkerMode}) {
                 let newMarkers = [...markers]
                 let id = uuidv4()
 
-                position = [e.latlng.lat, e.latlng.lng]
+                // position = [e.latlng.lat, e.latlng.lng]
+                position = e.latlng
 
                 const locationData = {
                     title: '',
@@ -41,11 +40,12 @@ export default function WorldMap({isLoggedIn, markerMode, setMarkerMode}) {
                     id: id,
                     draggable: false,
                     position: position,
-                    locationData: locationData
+                    locationData: locationData,
+                    editMode: true
                 }
 
                 newMarkers.push(newMarker)
-                setMarkers(newMarkers)
+                setMarkers((prev) => [...prev, newMarker])
 
                 console.log(markers, newMarkers)
 
@@ -54,43 +54,20 @@ export default function WorldMap({isLoggedIn, markerMode, setMarkerMode}) {
         })
     }
 
-    useEffect(() => {
-        console.log(
-            'un nou render', markers
-        )
-
-    })
-
     const handleDragEnd = (e, draggedMarker) => {
         draggedMarker.draggable = false
 
         setMarkerMode(0)
-        setStartedEdit(false)
+        setStartedEdit((prev) => !prev)
 
         console.log(draggedMarker)
     }
 
 
-    const startEdit = (clickedMarker) => {
-        console.log('ajung aici?')
-
-        clickedMarker.draggable = true
-
-        setStartedEdit(true)
-    }
-
-    const handleSubmit = (e, markerObj, formData) => {
-        console.log(markerObj)
-
-        markerObj.locationData.title = formData['title']
-        markerObj.locationData.rating = formData['rating']
-        markerObj.locationData.description = formData['description']
-    }
-
     useEffect(() => {
-        if (!isLoggedIn) {
-            navigate('/login')
-        }
+        // if (!isLoggedIn) {
+        //     navigate('/login')
+        // }
 
     }, [isLoggedIn])
 
@@ -119,6 +96,11 @@ export default function WorldMap({isLoggedIn, markerMode, setMarkerMode}) {
         setEditInfo((prev) => !prev)
     }
 
+    const toggleShowCustomPopup = () => {
+        // console.log('pluh')
+        setShowCustomPopup((prev) => !prev)
+    }
+
     return (
         <>
             <MapContainer 
@@ -132,23 +114,33 @@ export default function WorldMap({isLoggedIn, markerMode, setMarkerMode}) {
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
                 {markers.map((markerObject, index) => (
-                    <Marker
-                        key={markerObject.id}
-                        position={markerObject.position}
-                        draggable={markerObject.draggable}
-                        eventHandlers={{
-                            dragend: (e) => handleDragEnd(e, markerObject),
-                            // click: (e) => handleClick(e, markerObject),
-                        }}>
-                        <Popup>
-                            <PopupForm
-                                toggleEditInfo={toggleEditInfo}
-                                markerObject={markerObject} 
-                                startEdit={startEdit} 
-                                handleSubmit={handleSubmit}
-                                editInfo={editInfo}/>
-                        </Popup>
-                    </Marker>
+                    <div key = {index}>
+                        <Marker
+                            key={markerObject.id}
+                            position={markerObject.position}
+                            draggable={markerObject.draggable}
+                            eventHandlers={{
+                                dragend: (e) => handleDragEnd(e, markerObject),
+                                click: (e) => changeCurrentSelection(markerObject)
+                            }}>
+                            {/* <Popup>
+                                <PopupForm
+                                    toggleEditInfo={toggleEditInfo}
+                                    markerObject={markerObject} 
+                                    startEdit={startEdit} 
+                                    handleSubmit={handleSubmit}
+                                    editInfo={editInfo}
+                                    deleteMarker={deleteMarker}/>
+                            </Popup> */}
+                            <Tooltip>
+                                Click to edit
+                            </Tooltip>
+                            <Popup
+                                closeOnClick={false}>
+                                Current Selection
+                            </Popup>
+                        </Marker>
+                    </div>
                 ))}
                 <LocationMarker />
 				<SearchBar addNewMarker = {addNewMarker}/>

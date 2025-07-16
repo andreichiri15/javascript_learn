@@ -1,9 +1,6 @@
-import { useMap } from "react-leaflet";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function PopupForm({markerObject, startEdit, handleSubmit, editInfo = true, toggleEditInfo}) {
-    const map = useMap()
-
+export default function PopupForm({markerObject, startEdit, handleSubmit, deleteMarker, startEditContent, handleCancel}) {
     const [formData, setFormData] = useState({
         title: "",
         rating: "",
@@ -18,9 +15,21 @@ export default function PopupForm({markerObject, startEdit, handleSubmit, editIn
         }));
     };
 
+    useEffect(() => {
+        if (markerObject?.editMode && markerObject?.locationData) {
+            console.log('useeffect', markerObject)
+
+            setFormData({
+                title: markerObject.locationData.title || "",
+                rating: String(markerObject.locationData.rating || ""),
+                description: markerObject.locationData.description || "",
+            });
+        }
+    }, [markerObject, markerObject.editMode]);
+
     return (
         <>
-            {editInfo ?
+            {markerObject?.editMode ?
                 <div className='popup-wrapper'>
                     <form className="popup-form">
                         <label
@@ -29,7 +38,8 @@ export default function PopupForm({markerObject, startEdit, handleSubmit, editIn
                             <input
                                 style={{display:'block'}}
                                 type='text' 
-                                name="title" 
+                                name="title"
+                                value={formData.title}
                                 onChange={handleChange}/>
                         </label>
                         <label
@@ -54,7 +64,8 @@ export default function PopupForm({markerObject, startEdit, handleSubmit, editIn
                             Description:
                             <input 
                                 style={{display:'block'}}
-                                type='text' 
+                                type='text'
+                                value={formData.description}
                                 name='description' 
                                 onChange={handleChange}
                             />
@@ -62,25 +73,47 @@ export default function PopupForm({markerObject, startEdit, handleSubmit, editIn
                         <button
                             style={{display:'block'}}
                             onClick={(e) => {
+                                // e.stopPropagation();
                                 e.preventDefault()
-                                toggleEditInfo()
                                 handleSubmit(e, markerObject, formData)}}>
                             Save
                         </button>
+                        <button
+                            style={{display:'block'}}
+                            onClick={(e) => {
+                                e.preventDefault()
+
+                                handleCancel(markerObject)
+                            }}>
+                            Cancel
+                        </button>
                     </form>
-                    <button
-                        style={{display:'block'}}
-                        onClick={() => {
-                            map.closePopup()
-                            startEdit(markerObject)}}>
-                        Edit
-                    </button>
                 </div>
             :
                 <div>
                     <div>{markerObject.locationData.title}</div>
-                </div>
+                    <div>{markerObject.locationData.description}</div>
+                    <button
+                        style={{display:'block'}}
+                        onClick={(e) => {
+                            // e.stopPropagation();
+                            startEditContent(markerObject)}}>
+                        Edit Content
+                    </button>
+                    <button
+                        style={{display:'block'}}
+                        onClick={() => {
+                            deleteMarker(markerObject)}}>
+                        Delete
+                    </button>
+                </div> 
             }
+            <button
+                style={{display:'block'}}
+                onClick={() => {
+                    startEdit(markerObject)}}>
+                Edit Location
+            </button>
         </>
     )
 }
