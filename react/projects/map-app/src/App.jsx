@@ -65,8 +65,8 @@ function App() {
 	}
 
 	useEffect(() => {
-		console.log('current: ', startedEdit)
-	}, [startedEdit])
+		console.log('current selection: ', currentSelection)
+	}, [currentSelection])
 
 	return (
 		<BrowserRouter>

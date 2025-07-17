@@ -1,7 +1,6 @@
 # Map project TODO
 
 ## Bugs / improvements
-- nu mai folosi popup-urile din biblioteca, fa tu o componenta custom
 - imbunatateste design-ul la form
 - imbunatateste desgin la burger menu
 - burger menu sa ocupe un procentaj anume din pagina

@@ -86,6 +86,7 @@ export default function WorldMap({setStartedEdit, isLoggedIn, markers, setMarker
             id: uuidv4(),
             draggable: false,
             position: position,
+            editMode: true,
             locationData: locationData
         }
 
