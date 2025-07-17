@@ -1,10 +1,16 @@
 import { useNavigate } from "react-router-dom"
+import {motion, AnimatePresence} from 'framer-motion'
 
 export default function Menu({toggleMenu, setMarkerMode}) {
     const navigate = useNavigate()
 
     return (
-        <div className="right-side-menu">
+        <motion.div
+            key={'burger-menu'}
+            className="right-side-menu"
+            initial={{opacity: 0, width: 0}}
+            animate={{opacity: 1, width: "15rem"}}
+            exit={{opacity:0, width: 0}}>
             {/* TODO */}
             <div onClick={() => navigate('/about')}>About us</div>
             <div onClick={() => setMarkerMode(1)}>Insert New Location</div>
@@ -12,6 +18,6 @@ export default function Menu({toggleMenu, setMarkerMode}) {
             <div onClick={() => navigate('/login')}>Login</div>
 
             <div onClick={toggleMenu}>Close</div>
-        </div>
+        </motion.div>
     )
 }

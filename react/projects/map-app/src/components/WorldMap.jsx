@@ -41,7 +41,7 @@ export default function WorldMap({setStartedEdit, isLoggedIn, markers, setMarker
                     draggable: false,
                     position: position,
                     locationData: locationData,
-                    editMode: true
+                    editMode: false
                 }
 
                 newMarkers.push(newMarker)

@@ -8,6 +8,7 @@ import Burger from './components/Burger'
 import AboutPage from './components/AboutPage'
 import BottomBar from './components/BottomBar'
 import PopupForm from './components/PopupForm'
+import {motion, AnimatePresence} from 'motion/react'
 
 function App() {
 	const [isOpened, setIsOpened] = useState(false)
