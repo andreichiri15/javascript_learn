@@ -1,7 +1,7 @@
 import {Marker, Tooltip} from 'react-leaflet'
 import {useRef} from 'react'
 
-export default function MarkerWrapper({markerObject, handleDragEnd, changeCurrentSelection}) {
+export default function MarkerWrapper({markerObject, handleDragEnd, changeCurrentSelection, setHidePopup}) {
     const markerRef = useRef(null)
 
     return (
@@ -12,10 +12,13 @@ export default function MarkerWrapper({markerObject, handleDragEnd, changeCurren
             ref={markerRef}
             eventHandlers={{
                 dragend: (e) => {
-                    console.log(markerRef.current._latlng)
+                    setHidePopup(false)
                     handleDragEnd(e, markerObject, markerRef.current._latlng)
                 },
-                click: (e) => changeCurrentSelection(markerObject)
+                click: (e) => changeCurrentSelection(markerObject),
+                dragstart: (e) => {
+                    setHidePopup(true)
+                }
             }}>
             {/* <Popup>
                 <PopupForm

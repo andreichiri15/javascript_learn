@@ -25,6 +25,7 @@ export default function WorldMap({
 
     const [editInfo, setEditInfo] = useState(true)
     const [showCustomPopup, setShowCustomPopup] = useState(false)
+    const [hidePopup, setHidePopup] = useState(false)
     
     const navigate = useNavigate()
 
@@ -67,6 +68,7 @@ export default function WorldMap({
     }
 
     const handleDragEnd = (e, draggedMarker, newPos) => {
+
         draggedMarker.draggable = false
 
         setMarkerMode(0)
@@ -132,8 +134,9 @@ export default function WorldMap({
                             markerObject={markerObject} 
                             handleDragEnd={handleDragEnd} 
                             changeCurrentSelection={changeCurrentSelection}
+                            setHidePopup={setHidePopup}
                         />
-                        {currentSelection && 
+                        {currentSelection && !hidePopup &&
                             <Popup
                                 position={currentSelection.position}
                                 offset={[0, -30]}
