@@ -52,14 +52,16 @@ body{
     display: flex;
     flex-direction: column;
     text-align: center;
-    justify-content: center;
+    justify-content: space-between;
     gap: 1rem;
     background-color: #EFFFFA;
     transition: transform 0.3s ease-in-out;
 }
 
+
 .right-side-menu > div{
     cursor: pointer;
+    text-align: center;
 }
 
 .bottom-bar {
@@ -161,90 +163,127 @@ input{
 }
 
 .popup-form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .popup-form label {
-  font-weight: 500;
-  display: flex;
-  flex-direction: column;
-  font-size: 14px;
-  color: #333;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    color: #333;
 }
 
 .popup-form input[type="text"] {
-  padding: 8px;
-  margin-top: 4px;
-  font-size: 14px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  outline: none;
-  transition: border-color 0.2s;
+    padding: 8px;
+    margin-top: 4px;
+    font-size: 14px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: border-color 0.2s;
 }
 
 .popup-form input[type="text"]:focus {
-  border-color: #0077ff;
+    border-color: #0077ff;
 }
 
 .rating-group {
-  display: flex;
-  gap: 8px;
-  margin-top: 4px;
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
 }
 
 .rating-group input[type="radio"] {
-  display: none;
+    display: none;
 }
 
 .rating-group label {
-  font-size: 20px;
-  cursor: pointer;
-  color: #ccc;
-  transition: color 0.2s;
+    font-size: 20px;
+    cursor: pointer;
+    color: #ccc;
+    transition: color 0.2s;
 }
 
 .rating-group input[type="radio"]:checked + label,
 .rating-group label:hover,
 .rating-group label:hover ~ label {
-  color: #e52;
+    color: #e52;
+}
+
+.rating-group label:hover{
+    transform: scale(1.25);
 }
 
 .popup-buttons {
-  display: flex;
-  gap: 10px;
-  justify-content: flex-end;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
 }
 
 .popup-buttons button {
-  padding: 6px 12px;
-  background-color: #0077ff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.2s;
+    padding: 6px 12px;
+    background-color: #0077ff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
 }
 
 .popup-buttons button:hover {
-  background-color: #005fc0;
+    background-color: #005fc0;
 }
 
 .popup-buttons .cancel {
-  background-color: #ccc;
-  color: black;
+    background-color: #ccc;
+    color: black;
 }
 
 .popup-buttons .cancel:hover {
-  background-color: #bbb;
+    background-color: #bbb;
 }
 
 .static-display {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  font-size: 14px;
-  color: #333;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 14px;
+    color: #333;
+}
+
+.wrapper{
+    filter: drop-shadow(0 0 0.3rem crimson);
+  }
+  
+div.c1 {
+    width: 100px;
+    height: 50px;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    background: #dd6b4d;
+}
+
+div.c1:after{
+    content: "";
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid black;
+    top: 28px;
+    left: 30px;
+    background: white;
+}
+  
+div.c2{
+    width: 0px;
+    height: 0px;
+    border-top: 100px solid #dd6b4d;
+    border-right: 50px solid transparent;
+    border-left: 50px solid transparent;
+    border-bottom: 100px solid transparent;
 }

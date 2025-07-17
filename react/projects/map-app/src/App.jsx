@@ -9,6 +9,8 @@ import AboutPage from './components/AboutPage'
 import BottomBar from './components/BottomBar'
 import PopupForm from './components/PopupForm'
 import {motion, AnimatePresence} from 'motion/react'
+import RecommendationsPage from './components/RecommendationsPage'
+import HomePage from './components/HomePage'
 
 function App() {
 	const [isOpened, setIsOpened] = useState(false)
@@ -31,7 +33,7 @@ function App() {
 	}
 
 	const handleSubmit = (e, markerObj, formData) => {
-		console.log(markerObj)
+		console.log('formData:', formData)
 
 		markerObj.locationData.title = formData['title']
 		markerObj.locationData.rating = formData['rating']
@@ -83,26 +85,50 @@ function App() {
 								changeCurrentSelection={changeCurrentSelection}
 								markers={markers}
 								setMarkers={setMarkers}
-								setStartedEdit={setStartedEdit}>
+								setStartedEdit={setStartedEdit}
+								currentSelection={currentSelection}>
 							</WorldMap>
 							<div>
-								{isOpened && <RightSideMenu setMarkerMode={setMarkerMode} toggleMenu={toggleMenu} isOpened={isOpened}></RightSideMenu>}
-								<Burger changeCurrentSelection={changeCurrentSelection} toggleMenu={toggleMenu} isOpened={isOpened}></Burger>
+								<AnimatePresence>
+									{isOpened &&
+										<motion.div
+											key={'burger-menu'}
+											className="right-side-menu"
+											initial={{opacity: 0, width: 0}}
+											animate={{opacity: 1, width: "15rem"}}
+											exit={{opacity:0, width: 0}}> 
+											<RightSideMenu setMarkerMode={setMarkerMode} toggleMenu={toggleMenu} isOpened={isOpened}></RightSideMenu>
+										</motion.div>}
+								</AnimatePresence>
+								<motion.div
+									whileTap={{right: "15%"}}>	
+									<Burger changeCurrentSelection={changeCurrentSelection} toggleMenu={toggleMenu} isOpened={isOpened}></Burger>
+								</motion.div>
 							</div>
-							{currentSelection && <BottomBar 
-								markerObj={currentSelection}
-								changeCurrentSelection={changeCurrentSelection} 
-								setIsOpened={setIsOpened}
-								isOpened={isOpened}>
-									<PopupForm 
-										markerObject={currentSelection}
-										handleSubmit={handleSubmit}
-										deleteMarker={deleteMarker}
-										startEdit={startEdit}
-										startEditContent={startEditContent}
-										handleCancel={handleCancel}>
-									</PopupForm>
-							</BottomBar>}
+							<AnimatePresence>
+								{currentSelection && 
+									<motion.div 
+									key={'bottom-menu'}
+										className="bottom-bar"
+										initial={{opacity: 0, height: 0}}
+										animate={{opacity: 1, height: "15rem"}}
+										exit={{opacity: 0, height: 0}}>
+										<BottomBar 
+											markerObj={currentSelection}
+											changeCurrentSelection={changeCurrentSelection} 
+											setIsOpened={setIsOpened}
+											isOpened={isOpened}>
+												<PopupForm 
+													markerObject={currentSelection}
+													handleSubmit={handleSubmit}
+													deleteMarker={deleteMarker}
+													startEdit={startEdit}
+													startEditContent={startEditContent}
+													handleCancel={handleCancel}>
+												</PopupForm>
+										</BottomBar>
+									</motion.div>}
+							</AnimatePresence>
 						</div>
 					}/>
 				{['/login', '/'].map((path, index) => {
@@ -120,6 +146,18 @@ function App() {
 					path='/about'
 					element={
 						<AboutPage/>
+					}
+				/>
+				<Route
+					path='/recommendations'
+					element={
+						<RecommendationsPage/>
+					}
+					/>
+				<Route
+					path='/home'
+					element={
+						<HomePage/>
 					}
 				/>
 			</Routes>

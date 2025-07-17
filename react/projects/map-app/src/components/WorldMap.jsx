@@ -1,12 +1,24 @@
-import { MapContainer, TileLayer, Marker, useMapEvents, Popup, Tooltip } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, useMapEvents, Popup, Tooltip, Circle } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { v4 as uuidv4 } from 'uuid';
 
 import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
 import SearchBar from "./SearchBar";
+import {customDivIcon} from './constants/Icons'
+import MarkerWrapper from "./MarkerWrapper";
 
-export default function WorldMap({setStartedEdit, isLoggedIn, markers, setMarkers, markerMode, setMarkerMode, changeCurrentSelection, setIsOpened}) {
+
+export default function WorldMap({
+    setStartedEdit, 
+    isLoggedIn, 
+    markers, 
+    setMarkers, 
+    markerMode, 
+    setMarkerMode, 
+    changeCurrentSelection, 
+    setIsOpened,
+    currentSelection}) {
     const mapRef = useRef(null);
 	const latitude = 51.505;
 	const longitude = -0.09;
@@ -41,7 +53,7 @@ export default function WorldMap({setStartedEdit, isLoggedIn, markers, setMarker
                     draggable: false,
                     position: position,
                     locationData: locationData,
-                    editMode: false
+                    editMode: true
                 }
 
                 newMarkers.push(newMarker)
@@ -54,13 +66,13 @@ export default function WorldMap({setStartedEdit, isLoggedIn, markers, setMarker
         })
     }
 
-    const handleDragEnd = (e, draggedMarker) => {
+    const handleDragEnd = (e, draggedMarker, newPos) => {
         draggedMarker.draggable = false
 
         setMarkerMode(0)
         setStartedEdit((prev) => !prev)
 
-        console.log(draggedMarker)
+        currentSelection.position = newPos;
     }
 
 
@@ -116,31 +128,20 @@ export default function WorldMap({setStartedEdit, isLoggedIn, markers, setMarker
                 />
                 {markers.map((markerObject, index) => (
                     <div key = {index}>
-                        <Marker
-                            key={markerObject.id}
-                            position={markerObject.position}
-                            draggable={markerObject.draggable}
-                            eventHandlers={{
-                                dragend: (e) => handleDragEnd(e, markerObject),
-                                click: (e) => changeCurrentSelection(markerObject)
-                            }}>
-                            {/* <Popup>
-                                <PopupForm
-                                    toggleEditInfo={toggleEditInfo}
-                                    markerObject={markerObject} 
-                                    startEdit={startEdit} 
-                                    handleSubmit={handleSubmit}
-                                    editInfo={editInfo}
-                                    deleteMarker={deleteMarker}/>
-                            </Popup> */}
-                            <Tooltip>
-                                Click to edit
-                            </Tooltip>
+                        <MarkerWrapper 
+                            markerObject={markerObject} 
+                            handleDragEnd={handleDragEnd} 
+                            changeCurrentSelection={changeCurrentSelection}
+                        />
+                        {currentSelection && 
                             <Popup
-                                closeOnClick={false}>
+                                position={currentSelection.position}
+                                offset={[0, -30]}
+                                closeOnClick={false}
+                                closeButton={false}
+                                closeOnEscapeKey={false}>
                                 Current Selection
-                            </Popup>
-                        </Marker>
+                            </Popup>}
                     </div>
                 ))}
                 <LocationMarker />

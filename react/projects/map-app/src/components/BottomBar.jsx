@@ -10,12 +10,13 @@ export default function BottomBar({markerObj, changeCurrentSelection, setIsOpene
     })
 
     return (
-        <AnimatePresence>
+        <div>
+        {/* <AnimatePresence>
             <motion.div 
                 className="bottom-bar"
                 initial={{opacity: 0, height: 0}}
                 animate={{opacity: 1, height: "15rem"}}
-                exit={{opacity: 0, height: 0}}>
+                exit={{opacity: 0, height: 0}}> */}
                 <button 
                     onClick={() => {
                         changeCurrentSelection(null)
@@ -28,7 +29,8 @@ export default function BottomBar({markerObj, changeCurrentSelection, setIsOpene
                     <FaTimes />
                 </button>
                 {children}
-            </motion.div>
-        </AnimatePresence>
+            {/* </motion.div>
+        </AnimatePresence> */}
+        </div>
     )
 }

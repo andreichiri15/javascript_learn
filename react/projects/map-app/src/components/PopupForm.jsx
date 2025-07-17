@@ -50,7 +50,7 @@ export default function PopupForm({
             <label>
                 Rating:
                 <div className="rating-group">
-                {[5, 4, 3, 2, 1].map((num) => (
+                {[1, 2, 3, 4, 5].map((num) => (
                     <span key={num}>
                     <input
                         type="radio"
@@ -78,22 +78,20 @@ export default function PopupForm({
 
             <div className="popup-buttons">
                 <button
-                type="submit"
-                onClick={(e) => {
-                    e.preventDefault();
-                    handleSubmit(e, markerObject, formData);
-                }}
-                >
-                Save
+                    type="submit"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        handleSubmit(e, markerObject, formData);
+                    }}>
+                    Save
                 </button>
                 <button
-                className="cancel"
-                onClick={(e) => {
-                    e.preventDefault();
-                    handleCancel(markerObject);
-                }}
-                >
-                Cancel
+                    className="cancel"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        handleCancel(markerObject);
+                    }}>
+                    Cancel
                 </button>
             </div>
             </form>
@@ -101,6 +99,7 @@ export default function PopupForm({
             <div className="static-display">
             <div><strong>Title:</strong> {markerObject.locationData.title}</div>
             <div><strong>Description:</strong> {markerObject.locationData.description}</div>
+            <div><strong>Rating:</strong> {markerObject.locationData.rating} stars</div>
 
             <div className="popup-buttons">
                 <button onClick={() => startEditContent(markerObject)}>Edit Content</button>
