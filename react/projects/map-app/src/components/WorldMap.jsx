@@ -1,4 +1,4 @@
-import { MapContainer, TileLayer, useMapEvents, Popup} from "react-leaflet";
+import { MapContainer, TileLayer, useMapEvents, Popup, useMap} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { v4 as uuidv4 } from 'uuid';
 
@@ -34,6 +34,7 @@ export default function WorldMap({
 
     function LocationMarker() {
         let position
+
         const map = useMapEvents({
             click(e) {
                 if (markerMode != 1) {
@@ -88,8 +89,8 @@ export default function WorldMap({
 
     }, [isLoggedIn])
 
-    const addNewMarker = (result) => {
-        insertToHistory(result)
+    const addNewMarker = (result, zoomLevel) => {
+        insertToHistory([result, zoomLevel])
         
         let position = [result.location.y, result.location.x]
 
@@ -105,7 +106,6 @@ export default function WorldMap({
             position: position,
             editMode: true,
             locationData: locationData,
-            fromSearch: true
         }
 
         setMarkers(prev => [...prev, newMarker])
@@ -149,7 +149,7 @@ export default function WorldMap({
                                 closeOnClick={false}
                                 closeButton={false}
                                 closeOnEscapeKey={false}>
-                                Current Selection
+                                {currentSelection.draggable ? 'Drag the marker to your desired position' : 'Current Selection'}
                             </Popup>}
                     </div>
                 ))}

@@ -65,7 +65,7 @@ body{
     display: flex;
     width: 15rem;
     flex-direction: column;
-    text-align: center;
+    /* text-align: center; */
     justify-content: space-between;
     gap: 1rem;
     background-color: #EFFFFA;
@@ -74,8 +74,12 @@ body{
 
 
 .right-side-menu > div{
-    cursor: pointer;
-    text-align: center;
+    margin-left: 1.5rem;
+    /* text-align: center; */
+}
+
+.right-side-menu > div > div:hover{
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 .bottom-bar {
@@ -322,6 +326,7 @@ div.c2{
 
 .search-bar-history > div{
     text-indent: 8px;
+    padding-left: 5px;
 }
 
 .search-bar-history > div:hover{

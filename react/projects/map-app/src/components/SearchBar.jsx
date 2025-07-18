@@ -40,7 +40,7 @@ export default function SearchBar({addNewMarker, setShowHistory}) {
         }
         
         map.on('geosearch/showlocation', (result) => {
-            addNewMarker(result)
+            addNewMarker(result, map.getZoom())
         })
         // map.on('geosearch/showlocation', addNewMarker)
         return () => map.removeControl(searchControl);

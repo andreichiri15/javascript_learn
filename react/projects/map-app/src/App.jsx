@@ -64,16 +64,16 @@ function App() {
 	}
 
 	const handleCancel = (marker) => {
-		if (marker.fromSearch) {
-			marker.fromSearch = false
+		// if (marker.fromSearch) {
+		// 	marker.fromSearch = false
 
-			setMarkers((prev) => {
-				return prev.filter((curr) => curr != marker)
-			})
+		// 	setMarkers((prev) => {
+		// 		return prev.filter((curr) => curr != marker)
+		// 	})
 
-			setCurrentSelection(null)
-		}
-
+		// }
+		
+		setCurrentSelection(null)
 		marker.editMode = false
 		setStartedEdit((prev) => !prev)
 	}
@@ -85,7 +85,7 @@ function App() {
 	const deleteFromHistory = (locationToDelete) => {
         console.log(locationToDelete)
 
-		setSearchHistory((prev) => prev.filter((searchElem) => searchElem != locationToDelete))
+		setSearchHistory((prev) => prev.filter((searchElem) => searchElem[0] != locationToDelete))
     }
 
 	useEffect(() => {
@@ -121,7 +121,6 @@ function App() {
 									{isOpened &&
 										<motion.div
 											key={'burger-menu'}
-											className="right-side-menu"
 											initial={{opacity: 0, width: 0}}
 											animate={{opacity: 1, width: "15rem"}}
 											exit={{opacity:0, width: 0}}> 
