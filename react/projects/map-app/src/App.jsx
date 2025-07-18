@@ -11,6 +11,7 @@ import PopupForm from './components/PopupForm'
 import {motion, AnimatePresence} from 'motion/react'
 import RecommendationsPage from './components/RecommendationsPage'
 import HomePage from './components/HomePage'
+import recomendData from './data/recommendations.json'
 
 function App() {
 	const [isOpened, setIsOpened] = useState(false)
@@ -20,6 +21,7 @@ function App() {
 	const [markers, setMarkers] = useState([])
 	const [startedEdit, setStartedEdit] = useState(true)
 	const [searchHistory, setSearchHistory] = useState([])
+	const [recommendations, setRecommendations] = useState([])
 
 	const toggleMenu = () => {
 		setIsOpened((prevState) => !prevState)
@@ -89,12 +91,10 @@ function App() {
     }
 
 	useEffect(() => {
-		console.log('current selection: ', currentSelection)
-	}, [currentSelection])
+		setRecommendations(recomendData)
 
-	useEffect(() => {
-		console.log('updated search history: ', searchHistory)
-	}, [searchHistory])
+		console.log(recomendData)
+	}, [])
 
 	return (
 		<BrowserRouter>
@@ -178,7 +178,8 @@ function App() {
 				<Route
 					path='/recommendations'
 					element={
-						<RecommendationsPage/>
+						<RecommendationsPage
+							recommendations={recommendations}/>
 					}
 					/>
 				<Route

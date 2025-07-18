@@ -9,8 +9,8 @@
 - burger menu sa ocupe un procentaj anume din pagina (wip)
 
 ## Features
+- (important) o componenta reutilizabila astfel incat sa am meniul de navigatie in orice pagina
 
-- istoric cautari
 - backend...
 - lista de recomandari bazata pe introducerile altor useri
 - un meniu in care poti edita locatiile in afara hartii (maybe? neah)

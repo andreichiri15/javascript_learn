@@ -1,7 +1,20 @@
-export default function RecommendationsPage() {
+import RecommendationFormat from "./RecommendationFormat"
+
+export default function RecommendationsPage({recommendations}) {
     return (
-        <div>
-            The recommendations page is work in progress..
+        <div className="recommend-page">
+            <h2>
+                Top destinations this month
+            </h2>
+            <main>
+                {recommendations.map((recommendation, index) => {
+                    return (
+                        <RecommendationFormat
+                            recommendation={recommendation}
+                            key = {index}/>
+                    )
+                })}
+            </main>
         </div>
     )
 }

@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "title": "Paris",
+    "averageRating": 3.7,
+    "reviews": [
+      {
+        "username": "travel_bug",
+        "rating": 4,
+        "description": "Loved the Eiffel Tower but the crowds were overwhelming.",
+        "date": "2024-08-21"
+      },
+      {
+        "username": "lucie123",
+        "rating": 3,
+        "description": "Nice atmosphere, but quite expensive.",
+        "date": "2024-10-10"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Barcelona",
+    "averageRating": 4.1,
+    "reviews": [
+      {
+        "username": "messiFan",
+        "rating": 5,
+        "description": "The architecture is stunning and food is amazing!",
+        "date": "2025-01-02"
+      },
+      {
+        "username": "adventure_seeker",
+        "rating": 4,
+        "description": "Good vibe, a bit too crowded in summer.",
+        "date": "2025-05-18"
+      },
+      {
+        "username": "euro_traveler",
+        "rating": 4,
+        "description": "Loved the beaches and Gaudí's work.",
+        "date": "2024-12-30"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Milano",
+    "averageRating": 4.6,
+    "reviews": [
+      {
+        "username": "fashionlover",
+        "rating": 5,
+        "description": "Perfect for shopping and style lovers!",
+        "date": "2025-03-11"
+      },
+      {
+        "username": "coffee_addict",
+        "rating": 4,
+        "description": "Delicious food and coffee everywhere.",
+        "date": "2024-11-20"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Vienna",
+    "averageRating": 4.4,
+    "reviews": [
+      {
+        "username": "historybuff",
+        "rating": 5,
+        "description": "Rich culture and classical music everywhere.",
+        "date": "2025-02-09"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Amsterdam",
+    "averageRating": 4.2,
+    "reviews": [
+      {
+        "username": "bikeride",
+        "rating": 4,
+        "description": "Great city for biking and chilling.",
+        "date": "2025-06-15"
+      },
+      {
+        "username": "artfan",
+        "rating": 5,
+        "description": "Van Gogh museum was a highlight.",
+        "date": "2024-09-03"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Prague",
+    "averageRating": 4.0,
+    "reviews": [
+      {
+        "username": "easternEscape",
+        "rating": 4,
+        "description": "Beautiful old town and cheap beer!",
+        "date": "2025-01-19"
+      }
+    ]
+  }
+]
