@@ -1,16 +1,14 @@
-export default function Burger({changeCurrentSelection, toggleMenu, isOpened}) {
+export default function Burger({ changeCurrentSelection, toggleMenu, isOpened }) {
     return (
-        <div 
-            onClick={() => {
-                if (!isOpened) {
-                    changeCurrentSelection(null)
+        <div className="burger" onClick={() => {
+            if (!isOpened) {
+                changeCurrentSelection(null);
                 }
-                toggleMenu()
-            }} 
-            className="burger">
-            <div/>
-            <div/>
-            <div/>
+            toggleMenu();
+        }}>
+        <div className={`line top ${isOpened ? 'open' : ''}`} />
+        <div className={`line middle ${isOpened ? 'open' : ''}`} />
+        <div className={`line bottom ${isOpened ? 'open' : ''}`} />
         </div>
-    )
+    );
 }

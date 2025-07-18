@@ -19,6 +19,7 @@ function App() {
 	const [currentSelection, setCurrentSelection] = useState(null)
 	const [markers, setMarkers] = useState([])
 	const [startedEdit, setStartedEdit] = useState(true)
+	const [searchHistory, setSearchHistory] = useState([])
 
 	const toggleMenu = () => {
 		setIsOpened((prevState) => !prevState)
@@ -63,13 +64,37 @@ function App() {
 	}
 
 	const handleCancel = (marker) => {
+		if (marker.fromSearch) {
+			marker.fromSearch = false
+
+			setMarkers((prev) => {
+				return prev.filter((curr) => curr != marker)
+			})
+
+			setCurrentSelection(null)
+		}
+
 		marker.editMode = false
 		setStartedEdit((prev) => !prev)
 	}
 
+	const insertToHistory = (searchResult) => {
+		setSearchHistory((prev) => [searchResult, ...prev].slice(0, 5))
+	}
+
+	const deleteFromHistory = (locationToDelete) => {
+        console.log(locationToDelete)
+
+		setSearchHistory((prev) => prev.filter((searchElem) => searchElem != locationToDelete))
+    }
+
 	useEffect(() => {
 		console.log('current selection: ', currentSelection)
 	}, [currentSelection])
+
+	useEffect(() => {
+		console.log('updated search history: ', searchHistory)
+	}, [searchHistory])
 
 	return (
 		<BrowserRouter>
@@ -86,7 +111,10 @@ function App() {
 								markers={markers}
 								setMarkers={setMarkers}
 								setStartedEdit={setStartedEdit}
-								currentSelection={currentSelection}>
+								currentSelection={currentSelection}
+								insertToHistory={insertToHistory}
+								searchHistory={searchHistory}
+								deleteFromHistory={deleteFromHistory}>
 							</WorldMap>
 							<div>
 								<AnimatePresence>

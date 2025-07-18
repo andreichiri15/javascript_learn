@@ -1,13 +1,12 @@
-import { MapContainer, TileLayer, Marker, useMapEvents, Popup, Tooltip, Circle } from "react-leaflet";
+import { MapContainer, TileLayer, useMapEvents, Popup} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { v4 as uuidv4 } from 'uuid';
 
 import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
 import SearchBar from "./SearchBar";
-import {customDivIcon} from './constants/Icons'
 import MarkerWrapper from "./MarkerWrapper";
-
+import SearchBarHistory from "./SearchBarHistory";
 
 export default function WorldMap({
     setStartedEdit, 
@@ -18,7 +17,10 @@ export default function WorldMap({
     setMarkerMode, 
     changeCurrentSelection, 
     setIsOpened,
-    currentSelection}) {
+    currentSelection,
+    insertToHistory,
+    searchHistory,
+    deleteFromHistory}) {
     const mapRef = useRef(null);
 	const latitude = 51.505;
 	const longitude = -0.09;
@@ -26,6 +28,7 @@ export default function WorldMap({
     const [editInfo, setEditInfo] = useState(true)
     const [showCustomPopup, setShowCustomPopup] = useState(false)
     const [hidePopup, setHidePopup] = useState(false)
+    const [showHistory, setShowHistory] = useState(false)
     
     const navigate = useNavigate()
 
@@ -86,8 +89,8 @@ export default function WorldMap({
     }, [isLoggedIn])
 
     const addNewMarker = (result) => {
-        console.log('am intrat', markers)
-
+        insertToHistory(result)
+        
         let position = [result.location.y, result.location.x]
 
         const locationData = {
@@ -101,10 +104,13 @@ export default function WorldMap({
             draggable: false,
             position: position,
             editMode: true,
-            locationData: locationData
+            locationData: locationData,
+            fromSearch: true
         }
 
         setMarkers(prev => [...prev, newMarker])
+
+        changeCurrentSelection(newMarker)
     }
 
     const toggleEditInfo = () => {
@@ -148,7 +154,12 @@ export default function WorldMap({
                     </div>
                 ))}
                 <LocationMarker />
-				<SearchBar addNewMarker = {addNewMarker}/>
+				<SearchBar 
+                    addNewMarker = {addNewMarker}
+                    setShowHistory={setShowHistory}/>
+                {showHistory && searchHistory.length > 0 && <SearchBarHistory searchHistory={searchHistory} deleteFromHistory={deleteFromHistory}/>}
+                {/* <SearchBarHistory searchHistory={searchHistory}/> */}
+                
             </MapContainer>
         </>
     )

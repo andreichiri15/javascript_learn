@@ -11,7 +11,7 @@ export default function PopupForm({
 
     const [formData, setFormData] = useState({
         title: "",
-        rating: "",
+        rating: null,
         description: "",
     });
 
@@ -99,7 +99,7 @@ export default function PopupForm({
             <div className="static-display">
             <div><strong>Title:</strong> {markerObject.locationData.title}</div>
             <div><strong>Description:</strong> {markerObject.locationData.description}</div>
-            <div><strong>Rating:</strong> {markerObject.locationData.rating} stars</div>
+            <div><strong>Rating:</strong> {markerObject.locationData.rating ? markerObject.locationData.rating + ' stars' : 'Not rated yet'}</div>
 
             <div className="popup-buttons">
                 <button onClick={() => startEditContent(markerObject)}>Edit Content</button>
